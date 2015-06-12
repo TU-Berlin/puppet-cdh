@@ -51,20 +51,20 @@ class cdh::hadoop::mount(
     # We can't even use unless => "test -d ${mount_point}"
     # in an exec, because that will fail too.
     # Instead, we parse the output of ls. :(
-    exec { 'mkdir_hdfs_mount_point':
-        command => "/bin/mkdir -p ${mount_point}",
-        unless  => "/bin/ls $(/usr/bin/dirname ${mount_point}) 2> /dev/null | grep -q $(/usr/bin/basename ${mount_point})",
-    }
-
-    mount { 'hdfs-fuse':
-        ensure   => 'mounted',
-        device   => $device,
-        name     => $mount_point,
-        fstype   => 'fuse',
-        options  => $options,
-        dump     => '0',
-        pass     => '0',
-        remounts => false,
-        require  => [Package['hadoop-hdfs-fuse'], Exec['mkdir_hdfs_mount_point']],
-    }
+#    exec { 'mkdir_hdfs_mount_point':
+#        command => "/bin/mkdir -p ${mount_point}",
+#        unless  => "/bin/ls $(/usr/bin/dirname ${mount_point}) 2> /dev/null | grep -q $(/usr/bin/basename ${mount_point})",
+#    }
+#
+#    mount { 'hdfs-fuse':
+#        ensure   => 'mounted',
+#        device   => $device,
+#        name     => $mount_point,
+#        fstype   => 'fuse',
+#        options  => $options,
+#        dump     => '0',
+#        pass     => '0',
+#        remounts => false,
+#        require  => [Package['hadoop-hdfs-fuse'], Exec['mkdir_hdfs_mount_point']],
+#    }
 }
